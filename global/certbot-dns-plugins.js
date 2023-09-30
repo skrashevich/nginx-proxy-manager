@@ -66,6 +66,16 @@ dns_azure_zone2 = example.org:/subscriptions/99800903-fb14-4992-9aff-12eaf274462
 		full_plugin_name: 'dns-azure',
 	},
 	//####################################################//
+	beget: {
+		display_name:        'BeGet',
+		package_name:        'certbot-dns-beget',
+		version_requirement: '~=1.7.0.dev1',
+		dependencies:        '',
+		credentials:         `dns_beget_login = login
+dns_beget_password = passwd`,
+		full_plugin_name: 'dns-beget',
+	},
+	//####################################################//
 	bunny: {
 		display_name:        'bunny.net',
 		package_name:        'certbot-dns-bunny',
