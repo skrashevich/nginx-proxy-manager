@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1.4
 # This is a Dockerfile intended to be built using `docker buildx`
 # for multi-arch support. Building with `docker build` may have unexpected results.
 
@@ -24,10 +25,12 @@ ENV SUPPRESS_NO_CONFIG_WARNING=1 \
 
 RUN echo "fs.file-max = 65535" > /etc/sysctl.conf \
 	&& apt-get update \
-	&& apt-get install -y --no-install-recommends jq logrotate \
+	&& apt-get install -y --no-install-recommends jq logrotate curl \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
+# install bun
+RUN curl -fsSL https://bun.sh/install | bash
 # s6 overlay
 COPY docker/scripts/install-s6 /tmp/install-s6
 RUN /tmp/install-s6 "${TARGETPLATFORM}" && rm -f /tmp/install-s6
@@ -39,8 +42,7 @@ COPY frontend/dist /app/frontend
 COPY global        /app/global
 
 WORKDIR /app
-RUN yarn install \
-	&& yarn cache clean
+RUN --mount=type=cache,target=/root/.cache bun install 
 
 # add late to limit cache-busting by modifications
 COPY docker/rootfs /
