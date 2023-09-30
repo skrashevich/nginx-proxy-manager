@@ -31,6 +31,7 @@ RUN echo "fs.file-max = 65535" > /etc/sysctl.conf \
 
 # install bun
 RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH=/root/.bun/bin:$PATH
 # s6 overlay
 COPY docker/scripts/install-s6 /tmp/install-s6
 RUN /tmp/install-s6 "${TARGETPLATFORM}" && rm -f /tmp/install-s6
