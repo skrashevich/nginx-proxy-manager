@@ -69,7 +69,7 @@ dns_azure_zone2 = example.org:/subscriptions/99800903-fb14-4992-9aff-12eaf274462
 	beget: {
 		display_name:        'BeGet',
 		package_name:        'certbot-dns-beget',
-		version_requirement: '~=1.7.0.dev1',
+		version_requirement: '>=1.7.0.dev3',
 		dependencies:        '',
 		credentials:         `dns_beget_login = login
 dns_beget_password = passwd`,
